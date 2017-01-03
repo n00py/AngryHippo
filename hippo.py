@@ -74,6 +74,7 @@ def inject_keystrokes(address, port, password, listen_host, listen_port, speed):
     s.close()
 
 def print_banner():
+
     print '''                   /\____/\            _
                   /   ..   \          /_\  _ __   __ _ _ __ _   _
                  /  \    /  \        //_\\\\| '_ \ / _` | '__| | | |
