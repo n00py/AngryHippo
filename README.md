@@ -31,7 +31,7 @@ python hippo.py --sniff
 ```
 ### Cracking with Angry Hippo
 ```
-python --crack --wordlist [PATH TO WORDLIST] --challenge [CHALLENGE] --response [RESPONSE]
+python hippo.py --crack --wordlist [PATH TO WORDLIST] --challenge [CHALLENGE] --response [RESPONSE]
 ```
 ### Keystroke injection with Angry Hippo
 ```
