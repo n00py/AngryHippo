@@ -40,3 +40,7 @@ python hippo.py --inject --target [VICTIM] --port [LISTENER_PORT] --key [PASSWOR
 ```
 
 For more information view the blog post located here: https://www.n00py.io/2017/01/control-your-mac-with-an-iphone-app-an-analysis-of-hipporemote/
+
+###Future Ideas:
+- Add multi-processing to the cracking module
+- TCP hijacking if MITM to inject keystrokes without knowing the password
