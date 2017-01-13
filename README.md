@@ -44,3 +44,4 @@ For more information view the blog post located here: https://www.n00py.io/2017/
 ###Future Ideas:
 - Add multi-processing to the cracking module
 - TCP hijacking w/ raw sockets if MITM to inject keystrokes without knowing the password
+- Little Snitch Detection and Bypass
